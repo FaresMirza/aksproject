@@ -1,7 +1,7 @@
 name: Build & Push Vote App
 
 on:
-  workflow_dispatch:
+  workflow_dispatch: 
   push:
     paths:
       - 'voting-app/vote/**'
@@ -14,21 +14,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-
-      - name: Get next numeric tag
-        id: version
-        run: |
-          latest=$(git tag --sort=-v:refname | grep -E '^[0-9]+$' | tail -n 1 || echo "0")
-          echo "Latest tag: $latest"
-          next=$((latest + 1))
-          echo "next_tag=$next" >> $GITHUB_OUTPUT
-
-      - name: Create Git Tag
-        run: |
-          git config user.name "GitHub Actions"
-          git config user.email "actions@github.com"
-          git tag ${{ steps.version.outputs.next_tag }}
-          git push origin ${{ steps.version.outputs.next_tag }}
 
       - name: Log in to Docker Hub
         uses: docker/login-action@v3
@@ -44,4 +29,4 @@ jobs:
           push: true
           tags: |
             ${{ secrets.DOCKER_USERNAME }}/vote-app:latest
-            ${{ secrets.DOCKER_USERNAME }}/vote-app:${{ steps.version.outputs.next_tag }}
+            ${{ secrets.DOCKER_USERNAME }}/vote-app:${{ github.run_number }}
