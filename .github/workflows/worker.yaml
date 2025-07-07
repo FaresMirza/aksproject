@@ -4,8 +4,8 @@ on:
   workflow_dispatch: 
   push:
     paths:
-      - 'voting-app/vote/**'
-      - '.github/workflows/vote.yml'
+      - 'voting-app/worker/**'
+      - '.github/workflows/worker.yml'
 
 jobs:
   build-and-push:
@@ -24,8 +24,8 @@ jobs:
       - name: Build and Push Docker Image
         uses: docker/build-push-action@v5
         with:
-          context: ./voting-app/vote
-          file: ./voting-app/vote/Dockerfile
+          context: ./voting-app/worker
+          file: ./voting-app/worker/Dockerfile
           push: true
           tags: |
             ${{ secrets.DOCKER_USERNAME }}/vote-app:${{ github.run_number }}
