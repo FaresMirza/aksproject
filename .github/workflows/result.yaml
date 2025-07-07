@@ -1,0 +1,31 @@
+name: Build & Push Vote App
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "voting-app/result/**"
+      - ".github/workflows/result.yml"
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build and Push Docker Image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./voting-app/result
+          file: ./voting-app/result/Dockerfile
+          push: true
+          tags: |
+            ${{ secrets.DOCKER_USERNAME }}/result-app:${{ github.run_number }}
