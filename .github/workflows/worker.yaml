@@ -1,11 +1,11 @@
 name: Build & Push Worker App
 
 on:
-  workflow_dispatch: 
+  workflow_dispatch:
   push:
     paths:
-      - 'voting-app/worker/**'
-      - '.github/workflows/worker.yml'
+      - "voting-app/worker/**"
+      - ".github/workflows/worker.yml"
 
 jobs:
   build-and-push:
@@ -28,4 +28,4 @@ jobs:
           file: ./voting-app/worker/Dockerfile
           push: true
           tags: |
-            ${{ secrets.DOCKER_USERNAME }}/vote-app:${{ github.run_number }}
+            ${{ secrets.DOCKER_USERNAME }}/worker-app:${{ github.run_number }}
