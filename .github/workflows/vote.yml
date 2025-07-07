@@ -1,6 +1,7 @@
 name: Build & Push Vote App
 
 on:
+  workflow_dispatch: 
   push:
     paths:
       - 'voting-app/vote/**'
