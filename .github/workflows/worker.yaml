@@ -1,4 +1,4 @@
-name: Build & Push Vote App
+name: Build & Push Worker App
 
 on:
   workflow_dispatch: 
