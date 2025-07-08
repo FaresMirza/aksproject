@@ -11,7 +11,7 @@ fi
 
 echo "🔧 Updating image to $IMAGE in $DEPLOYMENT_FILE..."
 
-# Replace the image line with the new image
-sed -i "s|image: .*|image: $IMAGE|" "$DEPLOYMENT_FILE"
+# ✅ عدّل فقط السطر اللي يحتوي على worker-app
+sed -i "s|image:.*worker-app:.*|image: $IMAGE|" "$DEPLOYMENT_FILE"
 
 echo "✅ Image updated to $IMAGE"
