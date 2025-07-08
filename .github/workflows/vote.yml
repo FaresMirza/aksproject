@@ -7,6 +7,9 @@ on:
       - 'voting-app/vote/**'
       - '.github/workflows/vote.yml'
 
+permissions:
+  contents: write
+
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
