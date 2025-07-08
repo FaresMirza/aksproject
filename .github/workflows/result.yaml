@@ -36,7 +36,7 @@ jobs:
       
       - name: 🔄 Update image in YAML
         run: |
-          chmod +x ./scripts/result-worker-image.sh
+          chmod +x ./scripts/update-result-image.sh
           ./scripts/update-result-image.sh ${{ github.run_number }}
 
       - name: 📤 Commit and Push updated manifest
