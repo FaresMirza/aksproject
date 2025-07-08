@@ -36,6 +36,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
     node_count     = 2
     vm_size        = "Standard_B2s"  
     vnet_subnet_id = azurerm_subnet.aks_subnet.id
+    node_public_ip_enabled = true
   }
 
   identity {
@@ -53,9 +54,33 @@ resource "azurerm_kubernetes_cluster" "aks" {
   }
 }
 
-# Role Assignment for AKS to access Subnet
 resource "azurerm_role_assignment" "aks_subnet_permission" {
   scope                = azurerm_subnet.aks_subnet.id
   role_definition_name = "Network Contributor"
   principal_id         = azurerm_kubernetes_cluster.aks.identity[0].principal_id
+}
+
+resource "azurerm_network_security_group" "aks_nsg" {
+  name                = "aks-nsg"
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
+}
+
+resource "azurerm_network_security_rule" "nodeport_rule" {
+  name                        = "Allow-NodePort"
+  priority                    = 1001
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "*"
+  source_port_range           = "*"
+  destination_port_ranges     = ["30000-32767"]
+  source_address_prefix       = "*"
+  destination_address_prefix  = "*"
+  resource_group_name         = azurerm_resource_group.rg.name
+  network_security_group_name = azurerm_network_security_group.aks_nsg.name
+}
+
+resource "azurerm_subnet_network_security_group_association" "aks_nsg_association" {
+  subnet_id                 = azurerm_subnet.aks_subnet.id
+  network_security_group_id = azurerm_network_security_group.aks_nsg.id
 }
