@@ -29,3 +29,10 @@ jobs:
           push: true
           tags: |
             ${{ secrets.DOCKER_USERNAME }}/worker-app:${{ github.run_number }}
+      
+      - name: 🔄 Update image in YAML
+        run: |
+          chmod +x ./scripts/update-worker-image.sh
+          ./scripts/update-worker-image.sh ${{ github.run_number }}
+
+      
