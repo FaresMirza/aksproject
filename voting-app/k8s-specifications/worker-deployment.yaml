@@ -17,5 +17,5 @@ spec:
       imagePullSecrets:
       - name: regcred
       containers:
-      - image: dockersamples/examplevotingapp_worker
+      - image: faresmirza/worker-app
         name: worker
