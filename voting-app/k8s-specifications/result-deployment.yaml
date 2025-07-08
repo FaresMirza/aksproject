@@ -17,7 +17,7 @@ spec:
       imagePullSecrets:
       - name: regcred
       containers:
-      - image: faresmirza/result-app:1
+      - image: faresmirza/result-app:6
         name: result
         ports:
         - containerPort: 80
