@@ -17,5 +17,5 @@ spec:
       imagePullSecrets:
       - name: regcred
       containers:
-      - image: faresmirza/worker-app
+      - image: faresmirza/worker-app:2
         name: worker

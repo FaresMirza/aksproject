@@ -17,7 +17,7 @@ spec:
       imagePullSecrets:
       - name: regcred
       containers:
-      - image: faresmirza/vote-app
+      - image: faresmirza/vote-app:1
         name: vote
         ports:
         - containerPort: 80
