@@ -4,20 +4,21 @@ metadata:
   name: voting-ingress
   namespace: default
   annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /$1
+    nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
+  ingressClassName: nginx
   rules:
     - http:
         paths:
-          - path: /vote(/|$)(.*)
-            pathType: ImplementationSpecific
+          - path: /vote
+            pathType: Prefix
             backend:
               service:
                 name: vote
                 port:
                   number: 8080
-          - path: /result(/|$)(.*)
-            pathType: ImplementationSpecific
+          - path: /result
+            pathType: Prefix
             backend:
               service:
                 name: result

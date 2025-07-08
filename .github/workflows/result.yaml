@@ -46,3 +46,4 @@ jobs:
           git add voting-app/k8s-specifications/result-deployment.yaml
           git commit -m "🔄 Update result image to run #${{ github.run_number }}" || echo "No changes to commit"
           git push
+          
